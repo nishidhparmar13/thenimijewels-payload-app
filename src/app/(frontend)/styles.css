@@ -1,164 +1,410 @@
+/* nimi brand palette — mirrors nimi/app/globals.css */
 :root {
-  --font-mono: 'Roboto Mono', monospace;
+  --burgundy: #480c14;
+  --wine: #650f1c;
+  --champagne: #d8c2a5;
+  --ivory: #faf7f2;
+  --white: #ffffff;
+  --charcoal: #242124;
+  --taupe: #8a7d78;
+
+  --heading: var(--font-heading), 'Cormorant Garamond', Georgia, serif;
+  --body: var(--font-body), 'Montserrat', system-ui, sans-serif;
 }
 
-* {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
-html {
-  font-size: 18px;
-  line-height: 32px;
-
-  background: rgb(0, 0, 0);
-  -webkit-font-smoothing: antialiased;
-}
-
 html,
-body,
-#app {
-  height: 100%;
+body {
+  margin: 0;
+  min-height: 100%;
 }
 
 body {
-  font-family: system-ui;
-  font-size: 18px;
-  line-height: 32px;
-
-  margin: 0;
-  color: rgb(1000, 1000, 1000);
-
-  @media (max-width: 1024px) {
-    font-size: 15px;
-    line-height: 24px;
-  }
+  background: var(--ivory);
+  color: var(--charcoal);
+  font-family: var(--body);
+  -webkit-font-smoothing: antialiased;
 }
 
-img {
-  max-width: 100%;
-  height: auto;
-  display: block;
-}
-
-h1 {
-  margin: 40px 0;
-  font-size: 64px;
-  line-height: 70px;
-  font-weight: bold;
-
-  @media (max-width: 1024px) {
-    margin: 24px 0;
-    font-size: 42px;
-    line-height: 42px;
-  }
-
-  @media (max-width: 768px) {
-    font-size: 38px;
-    line-height: 38px;
-  }
-
-  @media (max-width: 400px) {
-    font-size: 32px;
-    line-height: 32px;
-  }
-}
-
-p {
-  margin: 24px 0;
-
-  @media (max-width: 1024px) {
-    margin: calc(var(--base) * 0.75) 0;
-  }
+::selection {
+  background: var(--burgundy);
+  color: var(--white);
 }
 
 a {
-  color: currentColor;
+  color: inherit;
+  text-decoration: none;
+}
 
-  &:focus {
-    opacity: 0.8;
-    outline: none;
-  }
+/* ------------------------------------------------------------------ */
+/* Layout: brand panel + work area                                     */
+/* ------------------------------------------------------------------ */
 
-  &:active {
-    opacity: 0.7;
-    outline: none;
+.studio {
+  display: grid;
+  min-height: 100vh;
+  min-height: 100dvh;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 960px) {
+  .studio {
+    grid-template-columns: minmax(380px, 5fr) 7fr;
   }
 }
 
-svg {
-  vertical-align: middle;
-}
+/* ---------------- Brand panel ---------------- */
 
-.home {
+.brand {
+  position: relative;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   align-items: center;
-  height: 100vh;
-  padding: 45px;
-  max-width: 1024px;
-  margin: 0 auto;
+  justify-content: center;
+  gap: 24px;
+  padding: 56px 24px 40px;
+  background:
+    radial-gradient(120% 80% at 20% 0%, rgba(101, 15, 28, 0.9) 0%, transparent 60%),
+    linear-gradient(160deg, var(--wine) 0%, var(--burgundy) 55%, #2e070d 100%);
+  color: var(--ivory);
+}
+
+/* Thin champagne frame inset from the edges, like a jewellery box lid */
+.brand::before {
+  content: '';
+  position: absolute;
+  inset: 16px;
+  border: 1px solid rgba(216, 194, 165, 0.28);
+  border-radius: 20px;
+  pointer-events: none;
+}
+
+.brandHalo {
+  position: absolute;
+  right: -120px;
+  bottom: -120px;
+  width: 360px;
+  height: 360px;
+  border-radius: 50%;
+  background: rgba(216, 194, 165, 0.16);
+  filter: blur(70px);
+  pointer-events: none;
+}
+
+.brandInner {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.brandLogo {
+  width: min(70vw, 340px);
+  height: auto;
+}
+
+.brandTag {
+  margin: 8px 0 0;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--champagne);
+}
+
+.brandFoot {
+  position: relative;
+  margin: 0;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: lowercase;
+  color: rgba(250, 247, 242, 0.55);
+}
+
+@media (min-width: 960px) {
+  .brand {
+    padding: 64px 48px 48px;
+  }
+  .brand::before {
+    inset: 24px;
+  }
+  .brandInner {
+    margin-top: auto;
+  }
+  .brandFoot {
+    margin-top: auto;
+  }
+  .brandLogo {
+    width: min(28vw, 400px);
+  }
+}
+
+/* ---------------- Work area ---------------- */
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  padding: 48px 16px 24px;
+}
+
+@media (min-width: 640px) {
+  .panel {
+    padding: 64px 40px 28px;
+  }
+}
+
+@media (min-width: 960px) {
+  .panel {
+    padding: 72px clamp(40px, 6vw, 96px) 32px;
+  }
+}
+
+.panelInner {
+  width: 100%;
+  max-width: 640px;
+  margin: auto 0;
+}
+
+.eyebrow {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--taupe);
+}
+
+.title {
+  margin: 14px 0 0;
+  font-family: var(--heading);
+  font-weight: 500;
+  font-size: clamp(2.4rem, 6vw, 3.75rem);
+  line-height: 1.05;
+  color: var(--burgundy);
+  overflow-wrap: anywhere;
+}
+
+.title em {
+  font-style: italic;
+  color: var(--wine);
+}
+
+/* Champagne rule with a centre diamond (as on the storefront) */
+.rule {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 22px;
+}
+
+.rule span {
+  width: 56px;
+  height: 1px;
+  background: var(--champagne);
+}
+
+.rule i {
+  width: 6px;
+  height: 6px;
+  transform: rotate(45deg);
+  background: var(--champagne);
+}
+
+.lede {
+  margin: 22px 0 0;
+  max-width: 52ch;
+  font-size: 15px;
+  line-height: 1.75;
+  color: var(--taupe);
+}
+
+/* ---------------- Buttons ---------------- */
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 32px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 48px;
+  padding: 0 26px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease,
+    border-color 0.3s ease,
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.btn:focus-visible,
+.shortcut:focus-visible {
+  outline: 2px solid var(--wine);
+  outline-offset: 3px;
+}
+
+.btnPrimary {
+  background: var(--burgundy);
+  color: var(--ivory);
+  box-shadow: 0 10px 24px rgba(72, 12, 20, 0.18);
+}
+
+.btnPrimary:hover {
+  background: var(--wine);
+  transform: translateY(-2px);
+  box-shadow: 0 16px 32px rgba(72, 12, 20, 0.24);
+}
+
+.btnGhost {
+  border: 1px solid var(--champagne);
+  color: var(--burgundy);
+  background: transparent;
+}
+
+.btnGhost:hover {
+  border-color: var(--burgundy);
+  background: var(--white);
+}
+
+@media (max-width: 420px) {
+  .btn {
+    flex: 1 1 100%;
+  }
+}
+
+/* ---------------- Stats ---------------- */
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+  margin: 44px 0 0;
   overflow: hidden;
+  border: 1px solid rgba(216, 194, 165, 0.55);
+  border-radius: 20px;
+  background: rgba(216, 194, 165, 0.55);
+}
 
-  @media (max-width: 400px) {
-    padding: 24px;
+@media (min-width: 640px) {
+  .stats {
+    grid-template-columns: repeat(4, 1fr);
   }
+}
 
-  .content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    flex-grow: 1;
+.stat {
+  padding: 18px 20px;
+  background: var(--white);
+}
 
-    h1 {
-      text-align: center;
-    }
+.stat dt {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--taupe);
+}
+
+.stat dd {
+  margin: 6px 0 0;
+  font-family: var(--heading);
+  font-size: 2.25rem;
+  font-weight: 500;
+  line-height: 1;
+  color: var(--burgundy);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------------- Shortcuts ---------------- */
+
+.shortcuts {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+@media (min-width: 640px) {
+  .shortcuts {
+    grid-template-columns: repeat(2, 1fr);
   }
+}
 
-  .links {
-    display: flex;
-    align-items: center;
-    gap: 12px;
+.shortcut {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 18px 20px;
+  border: 1px solid rgba(216, 194, 165, 0.55);
+  border-radius: 18px;
+  background: var(--white);
+  transition:
+    border-color 0.3s ease,
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
 
-    a {
-      text-decoration: none;
-      padding: 0.25rem 0.5rem;
-      border-radius: 4px;
-    }
+.shortcut:hover {
+  border-color: var(--champagne);
+  transform: translateY(-3px);
+  box-shadow: 0 18px 36px rgba(72, 12, 20, 0.08);
+}
 
-    .admin {
-      color: rgb(0, 0, 0);
-      background: rgb(1000, 1000, 1000);
-      border: 1px solid rgb(0, 0, 0);
-    }
+.shortcutTitle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--heading);
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: var(--burgundy);
+}
 
-    .docs {
-      color: rgb(1000, 1000, 1000);
-      background: rgb(0, 0, 0);
-      border: 1px solid rgb(1000, 1000, 1000);
-    }
-  }
+.shortcutArrow {
+  font-family: var(--body);
+  font-size: 14px;
+  color: var(--champagne);
+  transition: transform 0.3s ease, color 0.3s ease;
+}
 
-  .footer {
-    display: flex;
-    align-items: center;
-    gap: 8px;
+.shortcut:hover .shortcutArrow {
+  transform: translateX(4px);
+  color: var(--wine);
+}
 
-    @media (max-width: 1024px) {
-      flex-direction: column;
-      gap: 6px;
-    }
+.shortcutCopy {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--taupe);
+}
 
-    p {
-      margin: 0;
-    }
+/* ---------------- Footer ---------------- */
 
-    .codeLink {
-      text-decoration: none;
-      padding: 0 0.5rem;
-      background: rgb(60, 60, 60);
-      border-radius: 4px;
-    }
+.footer {
+  margin-top: 48px;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  color: var(--taupe);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
   }
 }

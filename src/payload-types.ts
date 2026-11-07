@@ -69,15 +69,23 @@ export interface Config {
   collections: {
     users: User;
     media: Media;
+    categories: Category;
+    products: Product;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
-  collectionsJoins: {};
+  collectionsJoins: {
+    categories: {
+      products: 'products';
+    };
+  };
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
+    categories: CategoriesSelect<false> | CategoriesSelect<true>;
+    products: ProductsSelect<false> | ProductsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -150,6 +158,7 @@ export interface User {
 export interface Media {
   id: string;
   alt: string;
+  _objectKey?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -161,6 +170,104 @@ export interface Media {
   height?: number | null;
   focalX?: number | null;
   focalY?: number | null;
+}
+/**
+ * Shop categories shown on the home page, in the footer and as category pages.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "categories".
+ */
+export interface Category {
+  id: string;
+  title: string;
+  /**
+   * URL segment: /categories/<slug>. Filled from the title if left empty.
+   */
+  slug: string;
+  /**
+   * Used to auto-number products, e.g. EAR → NIMI-EAR-018.
+   */
+  skuPrefix: string;
+  /**
+   * Lower numbers appear first.
+   */
+  displayOrder?: number | null;
+  /**
+   * Card image on the home page "Shop by Category" section.
+   */
+  image?: (string | null) | Media;
+  /**
+   * One-line tagline for the category card.
+   */
+  description?: string | null;
+  /**
+   * Shown under the heading on the category page.
+   */
+  pageDescription?: string | null;
+  /**
+   * Search engine / link preview description for the category page.
+   */
+  metaDescription?: string | null;
+  products?: {
+    docs?: (string | Product)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "products".
+ */
+export interface Product {
+  id: string;
+  title: string;
+  /**
+   * e.g. NIMI-EAR-001. Also the product URL. Leave empty to auto-number.
+   */
+  refNo?: string | null;
+  category: string | Category;
+  /**
+   * Untick to show the piece as sold out.
+   */
+  isAvailable?: boolean | null;
+  /**
+   * Optional badge on the product card.
+   */
+  label?: ('trending' | 'new' | 'bestseller') | null;
+  /**
+   * Lower numbers appear first in "Featured".
+   */
+  displayOrder?: number | null;
+  /**
+   * First image is the card thumbnail; the second shows on hover.
+   */
+  images: (string | Media)[];
+  price: number;
+  discountAmount?: number | null;
+  discountDescription?: string | null;
+  /**
+   * Drives the filter chips on the category page.
+   */
+  type:
+    | 'oxidise'
+    | 'german_silver'
+    | 'korean'
+    | 'jhumka'
+    | 'stud'
+    | 'choker'
+    | 'pendant'
+    | 'layered'
+    | 'band'
+    | 'cocktail'
+    | 'adjustable';
+  description?: string | null;
+  materials?: string | null;
+  care?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -193,6 +300,14 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'media';
         value: string | Media;
+      } | null)
+    | ({
+        relationTo: 'categories';
+        value: string | Category;
+      } | null)
+    | ({
+        relationTo: 'products';
+        value: string | Product;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -265,6 +380,7 @@ export interface UsersSelect<T extends boolean = true> {
  */
 export interface MediaSelect<T extends boolean = true> {
   alt?: T;
+  _objectKey?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -276,6 +392,46 @@ export interface MediaSelect<T extends boolean = true> {
   height?: T;
   focalX?: T;
   focalY?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "categories_select".
+ */
+export interface CategoriesSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  skuPrefix?: T;
+  displayOrder?: T;
+  image?: T;
+  description?: T;
+  pageDescription?: T;
+  metaDescription?: T;
+  products?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "products_select".
+ */
+export interface ProductsSelect<T extends boolean = true> {
+  title?: T;
+  refNo?: T;
+  category?: T;
+  isAvailable?: T;
+  label?: T;
+  displayOrder?: T;
+  images?: T;
+  price?: T;
+  discountAmount?: T;
+  discountDescription?: T;
+  type?: T;
+  description?: T;
+  materials?: T;
+  care?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

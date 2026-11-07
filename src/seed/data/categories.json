@@ -1,0 +1,32 @@
+[
+  {
+    "title": "Earrings",
+    "slug": "earrings",
+    "skuPrefix": "EAR",
+    "description": "Jhumkas, studs and statement drops",
+    "pageDescription": "Jhumkas, studs and statement drops.",
+    "metaDescription": "Hand-finished oxidised jhumkas, studs and statement drops in skin-kind, anti-tarnish metal.",
+    "image": "/main-categories/earing.png",
+    "productsFile": "earrings.json"
+  },
+  {
+    "title": "Necklaces",
+    "slug": "necklaces",
+    "skuPrefix": "NECK",
+    "description": "Chokers, layered chains and pendants",
+    "pageDescription": "Chokers and temple pendants. Weighted to sit beautifully.",
+    "metaDescription": "Oxidised chokers, layered chains and temple pendants, hand-finished in skin-kind, anti-tarnish metal.",
+    "image": "/main-categories/neckless.png",
+    "productsFile": "necklaces.json"
+  },
+  {
+    "title": "Rings",
+    "slug": "rings",
+    "skuPrefix": "RING",
+    "description": "Everyday bands to cocktail statements",
+    "pageDescription": "Statement rings and everyday stacks. Thoughtfully designed to add a little soul to every look.",
+    "metaDescription": "Everyday oxidised bands, adjustable stacks and cocktail statements in skin-kind, anti-tarnish metal.",
+    "image": "/main-categories/ring.png",
+    "productsFile": "rings.json"
+  }
+]
